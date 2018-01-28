@@ -40,6 +40,11 @@ class PhotoStreamViewController: UICollectionViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    if let layout = collectionView?.collectionViewLayout as? PinterestLayout {
+      layout.delegate = self
+    }
+    
     if let patternImage = UIImage(named: "Pattern") {
       view.backgroundColor = UIColor(patternImage: patternImage)
     }
@@ -66,4 +71,10 @@ extension PhotoStreamViewController: UICollectionViewDelegateFlowLayout {
     return CGSize(width: itemSize, height: itemSize)
   }
   
+}
+
+extension PhotoStreamViewController: PinterestLayoutDelegate {
+  func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+    return photos[indexPath.item].image.size.height
+  }
 }
